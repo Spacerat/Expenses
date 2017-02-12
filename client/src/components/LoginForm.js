@@ -10,13 +10,13 @@ class LoginForm extends Component {
 		<form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="username">Username</label>
-                <input required="" className="form-control" type="text" name="username" id="username" />
+                <input required="required" className="form-control" type="text" name="username" id="username" />
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input required="" className="form-control" type="password" name="password" id="password" />
+                <input required="required" className="form-control" type="password" name="password" id="password" />
             </div>
-            <input className="form-control" type="submit" value="Login" />
+            <input className="btn btn-default" type="submit" value="Login" />
         </form>
       </div>
     );
