@@ -1,0 +1,16 @@
+.App-body {
+  max-width: 500px;
+  margin: auto;
+}
+
+.App>h1 {
+	background-color: lightgreen;
+	margin-top: 0;
+	padding: 0.5em;
+ 	text-align: center;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
