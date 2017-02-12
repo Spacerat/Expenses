@@ -1,8 +1,12 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from django.contrib.auth.models import User
+
 from expenses.models import Expense
 from expenses.serializers import ExpenseSerializer, UserSerializer
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+
 from functools import wraps
 
 
@@ -19,3 +23,10 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class ReportView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        report = Expense.getReport(self.request.user)
+        return Response(report)
