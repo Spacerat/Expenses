@@ -9,8 +9,7 @@ class Report extends Component {
 		this.props.fetchReport()
 	}
 	render() {
-		let report = this.props.report;
-    	return <ReportTable {...report} />
+    	return <ReportTable {...this.props} />
 	}
 }
 

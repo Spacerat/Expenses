@@ -3,10 +3,14 @@ import {LoginForm} from 'components'
 import {login} from 'api'
 import {browserHistory} from 'react-router'
 
-class Expense extends Component {
+import { fetchOwnUser } from 'actions'
+import { connect } from 'react-redux'
+
+class Login extends Component {
 	doLogin = (username, password) => {
 		login(username, password).then(()=> {
 			browserHistory.push('/expenses')
+			this.props.fetchOwnUser()
 		}).catch((err)=> {
 			console.log(err)
 		})
@@ -16,4 +20,4 @@ class Expense extends Component {
   }
 }
 
-export default Expense;
+export default connect(null, {fetchOwnUser})(Login);

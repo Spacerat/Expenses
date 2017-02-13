@@ -17,8 +17,7 @@ class Expense(models.Model):
         return "<Expense: [{}] {} - {}>".format(self.datetime, self.owner.username, self.amount)
 
     @classmethod
-    def getReport(cls, user, group_kind='week'):
-        expenses = user.expenses.all()
+    def getReport(cls, expenses, group_kind='week'):
         with_stats = ((e, DateGrouper.create(e.datetime, group_kind=group_kind)) for e in expenses)
 
         out = []

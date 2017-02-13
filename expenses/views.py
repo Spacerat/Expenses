@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, filters
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.compat import coreapi
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
@@ -50,9 +51,31 @@ class UserView(APIView):
     def get(self, request, format=None):
         return Response(UserSerializer(request.user).data)
 
-class ReportView(APIView):
+class DateRangeFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        if request.query_params.get('from', None) and request.query_params.get('to', None):
+            print(request.query_params)
+            queryset = queryset.filter(datetime__range=[
+                request.query_params['from'],
+                request.query_params['to']
+            ])
+        return queryset.filter(owner=request.user)
+
+    def get_schema_fields(self, view):
+        return [
+            coreapi.Field(name='from', required=False, location='query'),
+            coreapi.Field(name='to', required=False, location='query'),
+            coreapi.Field(name='groupby', required=False, location='query')
+        ]
+
+class ReportView(GenericAPIView):
     permission_classes = [IsAuthenticated]
+    filter_backends = (DateRangeFilter,)
+    queryset = Expense.objects.all()
 
     def get(self, request, format=None):
-        report = Expense.getReport(self.request.user)
+        groupby = 'week'
+        if 'groupby' in request.query_params:
+            groupby = request.query_params['groupby']
+        report = Expense.getReport(self.filter_queryset(self.get_queryset()), group_kind=groupby)
         return Response(report)

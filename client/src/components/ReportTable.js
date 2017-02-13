@@ -18,25 +18,30 @@ function ReportRow({count, to, from, total}) {
 }
 
 class ReportFilterForm extends Component {
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault()
-        this.props.updateFilter(e)
+        this.props.updateFilter({
+            from: e.target.from.value,
+            to: e.target.to.value,
+            groupby: e.target.groupby.value
+        })
     }
 
-    handleClear(e) {
+    handleClear = (e) => {
         e.preventDefault()
-        this.props.clearFilter(e)
+        this.props.updateFilter()
     }
 
     render() {
+
         return (<form className="form-inline" onSubmit={this.handleSubmit}>
 
             <label htmlFor="date-form">From: </label>
-            <input className="form-control" type="date" id="report-date-from" />
+            <input className="form-control" name="from" type="date" id="report-date-from" />
             <label htmlFor="date-to">To: </label>
-            <input className="form-control" type="date" id="report-date-to" />
+            <input className="form-control" name="to" type="date" id="report-date-to" />
             <label>Group By</label>
-            <select id="report-groupby" className="form-control">
+            <select id="report-groupby" name="groupby" className="form-control">
                 <option value="week">Week</option>
                 <option value="month">Month</option>
                 <option value="year">Year</option>
@@ -50,11 +55,12 @@ class ReportFilterForm extends Component {
 
 class ReportTable extends Component {
     render() {
-        if (_.isEmpty(this.props)) return <Loading />
-        const {rows, grouped_by, updateFilter, clearFilter} = this.props
+        const {report, fetchReport} = this.props
+        if (_.isEmpty(report)) return <Loading />
+        const {rows, grouped_by, updateFilter, clearFilter} = report
         return (<div>
             <h3>{PeriodName(grouped_by)} Expenses Report</h3>
-            <ReportFilterForm updateFilter={updateFilter} clearFilter={clearFilter} />
+            <ReportFilterForm updateFilter={fetchReport} />
             <table className="table table-striped">
                 <thead>
                     <tr>

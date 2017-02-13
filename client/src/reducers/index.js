@@ -32,12 +32,17 @@ const users = handleActions({
 	USERS_FETCH_SUCCESS: (state, {payload})=>(payload)
 }, [])
 
+const user = handleActions({
+	SELF_FETCH_SUCCESS: (state, {payload})=>(payload)
+}, {})
+
 
 const rootReducer = combineReducers({
 	logReducer, 
 	expenses, 
 	report,
 	users,
+	user,
 	routing: routerReducer
 })
 export default rootReducer
