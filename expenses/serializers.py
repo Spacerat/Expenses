@@ -14,7 +14,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-	expenses = ExpenseSerializer(many=True)	
+	expenses = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
 		model = User
-		fields = ('id', 'expenses')
+		fields = ('id', 'username', 'expenses', 'is_staff')
