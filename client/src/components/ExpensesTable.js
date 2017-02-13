@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash'
 import 'css/DataTable.css';
 import 'css/App.css';
+import {Link} from 'react-router'
 import dateFormat from 'dateformat'
 
 function ExpenseEntry() {
@@ -22,7 +23,7 @@ function ExpenseRow({display_amount, description, datetime, id}) {
         <td>{dateFormat(datetime, "yyyy-mm-dd HH:MM")}</td>
         <td>{display_amount}</td>
         <td>{description}</td>
-        <td>Edit</td>
+        <td><Link to={`expense/${id}`}>Edit</Link></td>
     </tr>)
 }
 

@@ -3,7 +3,7 @@
 }
 
 .App>h1 {
-	background-color: lightgreen;
+	border-bottom: thick black solid;
 	margin-top: 0;
 	padding: 0.5em;
  	text-align: center;
