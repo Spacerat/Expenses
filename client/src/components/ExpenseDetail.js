@@ -6,10 +6,18 @@ import Loading from './Loading'
 class ExpenseDetail extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.updateExpense(e)
+        const {date, time, amount, description} = e.target
+        this.props.updateExpense({
+            id: this.props.id,
+            data: {
+                datetime: `${date.value}T${time.value}`,
+                amount: amount.value,
+                description: description.value
+            }
+        })
     }
     handleDelete = (e) => {
-        this.props.deleteExpense(e)
+        this.props.deleteExpense({id: this.props.id})
     }
     render() {
         if (!this.props.expense) return <Loading />
@@ -20,19 +28,19 @@ class ExpenseDetail extends Component {
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Amount</label>
                     <div className="col-sm-10">
-                        <input className="form-control" type="number" step="0.01" min="0" defaultValue={amount} />
+                        <input className="form-control" name="amount" type="number" step="0.01" min="0" defaultValue={amount} />
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Date</label>
                     <div className="col-sm-10">
-                        <input className="form-control" type="date"  defaultValue={dateFormat(datetime, 'isoDate')}/>
+                        <input className="form-control" name="date" type="date"  defaultValue={dateFormat(datetime, 'isoDate')}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Time</label>
                     <div className="col-sm-10">
-                        <input className="form-control" type="time" defaultValue={dateFormat(datetime, 'isoTime')}/>
+                        <input className="form-control" name="time" type="time" defaultValue={dateFormat(datetime, 'isoTime')}/>
                     </div>
                 </div>
                 <div className="form-group">

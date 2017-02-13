@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import {ExpensesTable} from 'components'
 import { connect } from 'react-redux'
-import { fetchExpenses } from 'actions'
+import { fetchExpenses, createExpense } from 'actions'
 
 class Expenses extends Component {
 	componentDidMount() {
 		this.props.fetchExpenses()
 	}
 	render() {
-    	var createExpense = (e)=> {console.log("Created expense", e)}
-    	return (
-     		<ExpensesTable expenses={this.props.expenses} createExpense={createExpense} />
-    	);
+    	return <ExpensesTable {...this.props} />
  	}
 }
 
 export default connect(
 	({expenses}) => ({expenses}),
-	{fetchExpenses}
+	{fetchExpenses, createExpense}
 )(Expenses)

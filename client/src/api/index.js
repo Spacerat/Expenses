@@ -14,7 +14,7 @@ const client = new Swagger({
 	basePath: API_BASE,
     responseInterceptor: {
         apply: function(data) {
-            data.data = JSON.parse(data.data)
+            if (data.data) data.data = JSON.parse(data.data)
             return data
         }
     }
@@ -35,10 +35,8 @@ ApiError.prototype.constructor = ApiError;
 
 function setToken(token) {
     window.localStorage.setItem('token', token)
-    // TOKEN = token;
     const auth = new Swagger.ApiKeyAuthorization("Authorization",`Token ${token}`,"header")
     return client.then((client)=>{
-        console.log("set token", token)
         client.clientAuthorizations.add("token_auth", auth)
         return client
     })
@@ -75,7 +73,6 @@ export function loadAuth() {
 export function logout() {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('username')
-    // TOKEN = null;
     client.then((client)=>client.clientAuthorizations.remove("token_auth"))
 }
 
