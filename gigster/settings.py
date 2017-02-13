@@ -57,7 +57,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+SCHEMA_DESTINATION = os.path.join(BASE_DIR, 'client', 'src', 'api', 'swagger.js')
+SCHEMA_NAME = 'Expenses Tracker'
 ROOT_URLCONF = 'gigster.urls'
 
 TEMPLATES = [
