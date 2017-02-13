@@ -57,7 +57,7 @@ class ReportTable extends Component {
     render() {
         const {report, fetchReport} = this.props
         if (_.isEmpty(report)) return <Loading />
-        const {rows, grouped_by, updateFilter, clearFilter} = report
+        const {rows, grouped_by} = report
         return (<div>
             <h3>{PeriodName(grouped_by)} Expenses Report</h3>
             <ReportFilterForm updateFilter={fetchReport} />
