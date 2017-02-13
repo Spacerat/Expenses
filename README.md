@@ -45,3 +45,22 @@ Bob is a standard user with the most expenses. Admin and joe are admins, with on
 Currently there are only backend tests.
 
 	$ python manage.py test
+
+## Point of interest
+
+Note that Django backend exports the entire schema for the REST API to a file to `client/src/api/swagger.js`. This is picked up by the front end, which uses *swagger.js* to construct an Javascript API. So for example
+
+	api.expenses.expenses_list()
+
+fires `GET /expenses`.
+
+On top of this, I built a generic API-action processor in `sagas.js` which 
+
+1. listens to 'CALL_API' actions
+2. makes an appropriate call to the swagger API (although, the API could be any object containing functions)
+3. normalizes the response data, if a normalizr schema is provided
+4. dispatches actions on request success/failures
+5. dispatches any additional actions specified
+
+This allows for `actions/index.js`, in which one-line action-creators can be created to fire off the relatively common process of "call this API, dispatch some actions, get the data", instead of relatively complicated thunks/sagas for every single API endpoint.
+
