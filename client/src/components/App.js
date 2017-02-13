@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import 'css/App.css';
-import LoginForm from './LoginForm';
-import {Expenses, Expense, Report} from 'containers';
 import {Link} from 'react-router'
 import classNames from 'classnames'
+import {logout} from 'api'
+import {browserHistory} from 'react-router'
 
 function NavButton({children, to, location}) {
-	const cn = classNames({active: (to==location)})
+	const cn = classNames({active: (to===location)})
 	return (<li className={cn}><Link to={to}>{children}</Link></li>)
 }
 
 class App extends Component {
+  handleLogout = () => {
+    logout()
+    browserHistory.push('/login')
+  }
   render() {
   	const location = this.props.location.pathname
     return (
@@ -23,6 +27,7 @@ class App extends Component {
         <div className="App-body">
 	        {this.props.children}
         </div>
+        {location == '/login' ? null : <button className='btn btn-default' type="button" onClick={this.handleLogout}>Logout</button> }
       </div>
     );
   }

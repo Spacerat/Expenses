@@ -6,7 +6,7 @@ import _ from 'lodash'
 class Expense extends Component {
   render() {
     let id = this.props.params.id;
-    var expense = _.find(fake_expenses, (e)=>e.id==id)
+    var expense = _.find(fake_expenses, (e)=>e.id===id)
     var updateExpense = (e)=> {console.log("Updated expense", e)}
     var deleteExpense = (e)=> {console.log("Deleted expense", e)}
     var props = {expense, updateExpense, deleteExpense}
