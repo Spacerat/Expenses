@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import 'css/DataTable.css';
+import Loading from './Loading'
 import dateFormat from 'dateformat'
 
 
@@ -30,19 +31,17 @@ class ReportFilterForm extends Component {
     render() {
         return (<form className="form-inline" onSubmit={this.handleSubmit}>
 
-            <label>From: 
-                <input className="form-control" type="date" />
-            </label>
-            <label>To: 
-                <input className="form-control" type="date" />
-            </label>
-            <label>Group By
-                <select className="form-control">
-                    <option value="week">Week</option>
-                    <option value="month">Month</option>
-                    <option value="year">Year</option>
-                </select>
-            </label>
+            <label htmlFor="date-form">From: </label>
+            <input className="form-control" type="date" id="report-date-from" />
+            <label htmlFor="date-to">To: </label>
+            <input className="form-control" type="date" id="report-date-to" />
+            <label>Group By</label>
+            <select id="report-groupby" className="form-control">
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        
             <button type="submit" className="btn btn-default mr-sm-1em">Refresh</button>
             <button type="button" className="btn btn-default" onClick={this.handleClear}>Clear</button>
         </form>)
@@ -51,6 +50,7 @@ class ReportFilterForm extends Component {
 
 class ReportTable extends Component {
     render() {
+        if (_.isEmpty(this.props)) return <Loading />
         const {rows, grouped_by, updateFilter, clearFilter} = this.props
         return (<div>
             <h3>{PeriodName(grouped_by)} Expenses Report</h3>

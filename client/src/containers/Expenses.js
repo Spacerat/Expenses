@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import {ExpensesTable} from 'components'
-import {fake_expenses} from 'api/fake_api'
+import { connect } from 'react-redux'
+import { fetchExpenses } from 'actions'
 
 class Expenses extends Component {
-  render() {
-    var createExpense = (e)=> {console.log("Created expense", e)}
-    return (
-      <ExpensesTable expenses={fake_expenses} createExpense={createExpense} />
-    );
-  }
+	componentDidMount() {
+		this.props.fetchExpenses()
+	}
+	render() {
+    	var createExpense = (e)=> {console.log("Created expense", e)}
+    	return (
+     		<ExpensesTable expenses={this.props.expenses} createExpense={createExpense} />
+    	);
+ 	}
 }
 
-export default Expenses;
+export default connect(
+	({expenses}) => ({expenses}),
+	{fetchExpenses}
+)(Expenses)

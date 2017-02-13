@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import {ReportTable} from 'components'
-// import {report} from 'api/fake_api'
-import api from 'api'
+import { fetchReport } from 'actions'
+import _ from 'lodash'
 
-class Expense extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {report: null}
-	}
+class Report extends Component {
 	componentDidMount() {
-
-		api.then((client)=>{
-			return client.report.report_list()
-		}).then((response) => {
-			this.setState({
-				report: response.data
-			})
-		})
+		this.props.fetchReport()
 	}
 	render() {
-		const report = this.state.report
-		console.log(report)
-    	return (
-      		(!report ? <div>Loading...</div> : <ReportTable {...report} />)
-   		);
+		let report = this.props.report;
+    	return <ReportTable {...report} />
 	}
 }
 
-export default Expense;
+
+export default connect(
+	({report}) => ({report}),
+	{fetchReport}
+)(Report)

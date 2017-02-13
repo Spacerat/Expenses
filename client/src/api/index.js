@@ -3,7 +3,7 @@ import Swagger from 'swagger-client'
 
 import spec from './swagger'
 
-let TOKEN = null;
+// let TOKEN = null;
 let API_HOST = 'localhost:8000'
 let API_BASE = urljoin('http://', API_HOST)
 let AUTH_URL = '/get_token/'
@@ -35,7 +35,7 @@ ApiError.prototype.constructor = ApiError;
 
 function setToken(token) {
     window.localStorage.setItem('token', token)
-    TOKEN = token;
+    // TOKEN = token;
     const auth = new Swagger.ApiKeyAuthorization("Authorization",`Token ${token}`,"header")
     return client.then((client)=>{
         console.log("set token", token)
@@ -75,8 +75,12 @@ export function loadAuth() {
 export function logout() {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('username')
-    TOKEN = null;
+    // TOKEN = null;
     client.then((client)=>client.clientAuthorizations.remove("token_auth"))
+}
+
+export function getClient() {
+    return client
 }
 
 export default client

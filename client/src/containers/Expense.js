@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import {ExpenseDetail} from 'components'
-import {fake_expenses} from 'api/fake_api'
+import { connect } from 'react-redux'
+import { fetchExpense } from 'actions'
 import _ from 'lodash'
 
 class Expense extends Component {
+  componentDidMount() {
+    console.log(this.props)
+    this.props.fetchExpense({id: this.props.id})
+  }
   render() {
-    let id = this.props.params.id;
-    var expense = _.find(fake_expenses, (e)=>e.id===id)
+    let expense = this.props.expense
     var updateExpense = (e)=> {console.log("Updated expense", e)}
     var deleteExpense = (e)=> {console.log("Deleted expense", e)}
     var props = {expense, updateExpense, deleteExpense}
-    return (
-      <ExpenseDetail {...props} />
-    );
+    return <ExpenseDetail {...props}/>
   }
 }
 
-export default Expense;
+
+export default connect(
+  ({expenses}, {params}) => ({
+    expense: expenses[params.id],
+    id: params.id
+  }),
+  {fetchExpense}
+)(Expense)

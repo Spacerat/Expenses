@@ -27,7 +27,7 @@ class App extends Component {
         <div className="App-body">
 	        {this.props.children}
         </div>
-        {location == '/login' ? null : <button className='btn btn-default' type="button" onClick={this.handleLogout}>Logout</button> }
+        {location === '/login' ? null : <button className='btn btn-default' type="button" onClick={this.handleLogout}>Logout</button> }
       </div>
     );
   }

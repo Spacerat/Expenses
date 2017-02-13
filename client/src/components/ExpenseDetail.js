@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import dateFormat from 'dateformat'
+import Loading from './Loading'
 
 class ExpenseDetail extends Component {
     handleSubmit = (e) => {
@@ -11,6 +12,7 @@ class ExpenseDetail extends Component {
         this.props.deleteExpense(e)
     }
     render() {
+        if (!this.props.expense) return <Loading />
         let {expense: {amount, description, datetime, id}} = this.props;
         return (<div>
             <h3>Expense {id}</h3>
