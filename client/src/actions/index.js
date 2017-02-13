@@ -21,3 +21,5 @@ export const updateExpense = createApiAction('EXPENSE_UPDATE', 'expenses.expense
 export const deleteExpense = createApiAction('EXPENSE_DELETE', 'expenses.expenses_delete', {then: push('/expenses')})
 
 export const fetchReport = createApiAction('REPORT_FETCH', 'report.report_list')
+
+export const fetchUsers = createApiAction('USERS_FETCH', 'users.users_list')

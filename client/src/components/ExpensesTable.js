@@ -17,12 +17,12 @@ function ExpenseEntry() {
     </tr>)
 }
 
-function ExpenseRow({display_amount, description, datetime, id}) {
+function ExpenseRow({display_amount, description, datetime, id, hide_edit}) {
     return (<tr>
         <td>{dateFormat(datetime, "yyyy-mm-dd HH:MM")}</td>
         <td>{display_amount}</td>
         <td>{description}</td>
-        <td><Link to={`expense/${id}`}>Edit</Link></td>
+        {hide_edit ? null : <td>  <Link to={`expense/${id}`}>Edit</Link></td>}
     </tr>)
 }
 
@@ -38,21 +38,21 @@ class ExpensesTable extends Component {
     }
 
     render() {
-        const {expenses} = this.props
+        const {expenses, user} = this.props
         return (<div>
             <h3>Your expenses</h3>
             <form className="form-inline" onSubmit={this.handleSubmit}>
             <table className="table table-striped">
                 <thead>
-                    <tr><th>Date</th><th>Amount</th><th>Description</th><th></th></tr>
+                    <tr><th>Date</th><th>Amount</th><th>Description</th>{user ?null:<th></th>}</tr>
                 </thead>
                 <tbody>
-                    {_.map(_.sortBy(expenses, 'datetime'), (e)=><ExpenseRow key={e.id} {...e} />)}
+                    {_.map(_.sortBy(expenses, 'datetime'), (e)=><ExpenseRow key={e.id} hide_edit={!!user} {...e} />)}
                 </tbody>
-                <tfoot>
+                {user ? null : <tfoot>
                     <tr><td colSpan="4"><h4>Add Expense</h4></td></tr>
                     <ExpenseEntry />
-                </tfoot>
+                </tfoot>}
             </table>
             </form>
         </div>);

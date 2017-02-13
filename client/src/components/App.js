@@ -21,8 +21,9 @@ class App extends Component {
       <div className="App container">
         <h1>Expenses Tracker</h1>
 		<ul className="nav nav-tabs">
-			<NavButton to='/expenses' location={location}>Expenses</NavButton>
+			  <NavButton to='/expenses' location={location}>Expenses</NavButton>
 		  	<NavButton to='/report' location={location}>Report</NavButton>
+        <NavButton to='/users' location={location}>Admin</NavButton>
 		</ul>
         <div className="App-body">
 	        {this.props.children}

@@ -6,7 +6,7 @@ import { normalize } from 'normalizr';
 function* fetchData({payload}) {
     let {path, result_type} = payload
     try {
-        yield put({type: `${result_type}_REQUESTED`});
+        yield put({type: `${result_type}_REQUESTED`, payload: payload});
         path = path.split('.')
         const client = yield call(getClient)
         const func = _.reduce(path, (r, k)=>(r[k]), client)
@@ -15,7 +15,7 @@ function* fetchData({payload}) {
         if (payload.schema) {
             data = normalize(data, payload.schema).entities
         }
-        yield put({type: `${result_type}_SUCCEESS`, payload: data});
+        yield put({type: `${result_type}_SUCCESS`, payload: data});
         if (payload.then) {
             yield put(payload.then)
         }

@@ -9,8 +9,6 @@ class Expense extends Component {
     this.props.fetchExpense({id: this.props.id})
   }
   render() {
-    // let expense = this.props.expense
-    // var props = {expense, updateExpense, deleteExpense}
     return <ExpenseDetail {...this.props}/>
   }
 }
