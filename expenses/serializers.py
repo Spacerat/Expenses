@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from djmoney.contrib.django_rest_framework.fields import MoneyField
 
 class ExpenseSerializer(serializers.ModelSerializer):
-	description = serializers.CharField(required=False)
+	description = serializers.CharField(required=False, allow_blank=True)
 	display_amount = serializers.CharField(source='amount', read_only=True)
 	amount = MoneyField(max_digits=8, decimal_places=2)
 	owner = serializers.ReadOnlyField(source='owner.username')
