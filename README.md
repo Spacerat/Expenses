@@ -1,4 +1,5 @@
 # Expenses Tracker
+A Django-React-Framework/React.JS based expenses tracking app, written for an interview take-home exercise.
 
 ## Installation
 
